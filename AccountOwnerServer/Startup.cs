@@ -43,6 +43,7 @@ namespace AccountOwnerServer
                 ForwardedHeaders = ForwardedHeaders.All
             });
 
+            // Will get route to index.html of Vue application.
             app.Use(async (context, next) =>
             {
                 await next();
