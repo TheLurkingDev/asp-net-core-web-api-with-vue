@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountOwnerServer.Controllers
@@ -10,10 +11,18 @@ namespace AccountOwnerServer.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private ILoggerManager _logger;
+
+        public ValuesController(ILoggerManager logger)
+        {
+            _logger = logger;
+        }
+        
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            _logger.LogInfo("FYI - This thing works now");
             return new string[] { "value1", "value2" };
         }
 
