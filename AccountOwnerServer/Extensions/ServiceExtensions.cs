@@ -2,11 +2,20 @@
 using LoggerService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Entities;
 
 namespace AccountOwnerServer.Extensions
 {
     public static class ServiceExtensions
     {
+        public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration config)
+        {
+            var connectionString = config["mysqlconnection:connectionString"];
+            services.AddDbContext<RepositoryContext>(o => o.UseMySql(connectionString));
+        }
+
         public static void ConfigureCORS(this IServiceCollection services)
         {
             services.AddCors(options =>
