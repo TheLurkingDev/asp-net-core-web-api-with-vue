@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Entities;
+using Repository;
 
 namespace AccountOwnerServer.Extensions
 {
@@ -39,6 +40,11 @@ namespace AccountOwnerServer.Extensions
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
             services.AddSingleton<ILoggerManager, LoggerManager>();
+        }
+
+        public static void ConfigureRepositoryWrapper(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
     }
 }

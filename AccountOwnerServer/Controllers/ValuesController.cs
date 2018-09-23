@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Contracts;
+﻿using Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace AccountOwnerServer.Controllers
 {
@@ -12,17 +9,23 @@ namespace AccountOwnerServer.Controllers
     public class ValuesController : ControllerBase
     {
         private ILoggerManager _logger;
+        private IRepositoryWrapper _repoWrapper;
 
-        public ValuesController(ILoggerManager logger)
+        public ValuesController(ILoggerManager logger, IRepositoryWrapper repositoryWrapper)
         {
             _logger = logger;
+            _repoWrapper = repositoryWrapper;
         }
         
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            _logger.LogInfo("FYI - This thing works now");
+            var domesticAccounts = _repoWrapper.Account.FindByCondition(x => x.AccountType.Equals("Domestic"));
+            var owners = _repoWrapper.Owner.FindAll();
+
+            _logger.LogInfo("And now we have tested the Repository.");
+
             return new string[] { "value1", "value2" };
         }
 

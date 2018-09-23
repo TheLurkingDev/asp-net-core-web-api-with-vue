@@ -31,6 +31,8 @@ namespace AccountOwnerServer
 
             services.ConfigureMySqlContext(Configuration);
 
+            services.ConfigureRepositoryWrapper();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
