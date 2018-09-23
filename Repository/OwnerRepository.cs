@@ -4,6 +4,7 @@ using Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Entities.ExtendedModels;
 
 namespace Repository
 {
@@ -25,6 +26,14 @@ namespace Repository
             return FindByCondition(owner => owner.Id.Equals(ownerId))
                 .DefaultIfEmpty(new Owner())
                 .FirstOrDefault();
+        }
+
+        public OwnerExtended GetOwnerWithDetails(Guid ownerId)
+        {
+            return new OwnerExtended(GetOwnerById(ownerId))
+            {
+                Accounts = RepositoryContext.Accounts.Where(account => account.OwnerId == ownerId)
+            };
         }
     }
 }
