@@ -35,5 +35,12 @@ namespace Repository
                 Accounts = RepositoryContext.Accounts.Where(account => account.OwnerId == ownerId)
             };
         }
+
+        public void CreateOwner(Owner owner)
+        {
+            owner.Id = Guid.NewGuid();
+            Create(owner);
+            Save();
+        }
     }
 }
