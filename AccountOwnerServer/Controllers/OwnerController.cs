@@ -35,13 +35,14 @@ namespace AccountOwnerServer.Controllers
             }
         }
 
+        [HttpGet("{id}")]
         public IActionResult GetOwnerById(Guid id)
         {
             try
             {
                 var owner = _repository.Owner.GetOwnerById(id);
 
-                if(owner == null)
+                if(owner.Id == Guid.Empty)
                 {
                     _logger.LogError($"Owner with id: {id}, was not found.");
                     return NotFound();
