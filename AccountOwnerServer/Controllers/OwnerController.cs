@@ -83,6 +83,7 @@ namespace AccountOwnerServer.Controllers
             }
         }
 
+        [HttpPost]
         public IActionResult CreateOwner([FromBody]Owner owner)
         {
             try
