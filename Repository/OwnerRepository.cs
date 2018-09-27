@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Entities.ExtendedModels;
+using Entities.Extensions;
 
 namespace Repository
 {
@@ -40,6 +41,13 @@ namespace Repository
         {
             owner.Id = Guid.NewGuid();
             Create(owner);
+            Save();
+        }
+
+        public void UpdateOwner(Owner dbOwner, Owner owner)
+        {
+            dbOwner.Map(owner);
+            Update(dbOwner);
             Save();
         }
     }
