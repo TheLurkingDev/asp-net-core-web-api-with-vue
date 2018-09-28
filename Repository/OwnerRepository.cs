@@ -50,5 +50,11 @@ namespace Repository
             Update(dbOwner);
             Save();
         }
+
+        public void DeleteOwner(Owner owner)
+        {
+            Delete(owner);
+            Save();
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace Contracts
         OwnerExtended GetOwnerWithDetails(Guid ownerId);
         void CreateOwner(Owner owner);
         void UpdateOwner(Owner dbOwner, Owner owner);
+        void DeleteOwner(Owner owner);
     }
 }

@@ -3,6 +3,7 @@ using Entities.Extensions;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace AccountOwnerServer.Controllers
 {
@@ -143,6 +144,34 @@ namespace AccountOwnerServer.Controllers
             catch(Exception ex)
             {
                 _logger.LogError($"Error encountered within UpdateOwner action: {ex.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteOwner(Guid id)
+        {
+            try
+            {
+                var owner = _repository.Owner.GetOwnerById(id);
+                if(owner.IsEmptyObject())
+                {
+                    _logger.LogError($"Owner with id: {id} was not found");
+                    return NotFound();
+                }
+
+                if(_repository.Account.AccountsByOwner(id).Any())
+                {
+                    _logger.LogError($"Cannot delete owner with id: {id}. Related accounts must be deleted first.");
+                    return BadRequest("Cannot delete owner.");
+                }
+
+                _repository.Owner.DeleteOwner(owner);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error encountered within DeleteOwner action: {ex.Message}");
                 return StatusCode(500, "Internal Server Error");
             }
         }
